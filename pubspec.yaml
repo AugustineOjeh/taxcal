@@ -1,0 +1,44 @@
+name: taxcal
+description: "Free personal income tax calculator"
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - lib/assets/images/logo_light.png
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: lib/assets/fonts/Inter_28pt-Medium.ttf
+          weight: 500
+          style: normal
+        - asset: lib/assets/fonts/Inter_28pt-Regular.ttf
+          weight: 400
+          style: normal
+    - family: Gayathri
+      fonts:
+        - asset: lib/assets/fonts/Gayathri-Regular.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Inter_28pt-Medium.ttf
+          weight: 700
