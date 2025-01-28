@@ -37,6 +37,8 @@ migrate_working_dir/
 !build/web/**/*
 /ios
 /android
+/android/
+*/android
 /windows
 /test
 /macos

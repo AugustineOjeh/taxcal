@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taxcal/screens/home.dart';
+import 'package:taxcal/utils/display.dart';
 
 void main() {
-  runApp(const TaxCal());
+  runApp(ProviderScope(child: TaxCal()));
 }
 
 class TaxCal extends StatelessWidget {
@@ -19,6 +22,7 @@ class TaxCal extends StatelessWidget {
             displayLarge: TextStyle(
                 fontFamily: 'Gayathri',
                 fontWeight: FontWeight.w700,
+                fontSize: displayFontSize(context),
                 color: Colors.white),
             bodyMedium: TextStyle(
                 fontSize: 16,
@@ -41,36 +45,7 @@ class TaxCal extends StatelessWidget {
             secondaryContainer: Color(0xFF9E9B95)),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'This is a text',
-              style: Theme.of(context).textTheme.bodyMedium,
-            )
-          ],
-        ),
-      ),
+      home: Home(),
     );
   }
 }
