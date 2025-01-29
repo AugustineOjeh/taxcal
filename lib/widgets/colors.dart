@@ -16,6 +16,7 @@ class TCColor {
   static Color forground(BuildContext context) {
     return Theme.of(context).colorScheme.onPrimary;
   }
+
   static Color textBody(BuildContext context) {
     return Theme.of(context).colorScheme.onSurface;
   }
@@ -24,11 +25,11 @@ class TCColor {
     return Theme.of(context).colorScheme.surface.withValues(alpha: 0.6);
   }
 
-  static Color green(BuildContext context) {
-    return Color(0xFF34C759);
+  static Color green(BuildContext context, {double? opacity}) {
+    return Color(0xFF34C759).withValues(alpha: opacity);
   }
 
-  static Color red(BuildContext context) {
-    return Color(0xFF34C759);
+  static Color red(BuildContext context, {double? opacity}) {
+    return Color(0xFF34C759).withValues(alpha: opacity);
   }
 }

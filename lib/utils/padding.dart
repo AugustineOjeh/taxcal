@@ -5,7 +5,7 @@ EdgeInsets dynamicPadding(BuildContext context) {
   if (screenWidth > 768) {
     return EdgeInsets.fromLTRB(72, 72, 0, 72);
   } else if (screenWidth > 480) {
-    return EdgeInsets.all(32);
+    return EdgeInsets.all(40);
   } else {
     return EdgeInsets.all(20);
   }

@@ -37,7 +37,7 @@ class TCField {
                       ? null
                       : Padding(
                           padding: EdgeInsets.fromLTRB(12, 14, 4, 14),
-                          child: TCText.description(currency, context)),
+                          child: TCText.input(currency, context)),
                   hintText: hint,
                   hintStyle: Theme.of(context)
                       .textTheme
@@ -76,7 +76,7 @@ class TCField {
           DropdownButtonFormField(
               items: items.map((String item) {
                 return DropdownMenuItem<String>(
-                    value: item, child: TCText.description(item, context));
+                    value: item, child: TCText.input(item, context));
               }).toList(),
               validator: validator,
               onChanged: onChanged,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 double displayFontSize(BuildContext context) {
@@ -9,4 +11,9 @@ double displayFontSize(BuildContext context) {
   } else {
     return 64;
   }
+}
+
+String getImageUrl(List<String> urls) {
+  final random = Random();
+  return urls[random.nextInt(urls.length)];
 }
