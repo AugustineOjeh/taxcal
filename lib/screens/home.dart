@@ -12,7 +12,6 @@ class Home extends ConsumerStatefulWidget {
 class _HomeState extends ConsumerState<Home> {
   final FocusNode _focusNode = FocusNode(); // Create FocusNode
   final _dummyController = TextEditingController();
-  String? _value;
 
   @override
   void dispose() {
@@ -23,24 +22,27 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: SizedBox(
-              width: 400,
-              child: TCField.dropdown(
-                  context: context,
-                  items: ['Man', 'Woman', 'Toddler', 'Anybody else'],
-                  onChanged: (value) {
-                    _value = value;
-                  },
-                  label: 'Labeling',
-                  hint: '0.00',
-                  controller: _dummyController),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: SizedBox(
+                width: 400,
+                child: TCField.dropdown(
+                    context: context,
+                    items: ['Man', 'Woman', 'Toddler', 'Anybody else'],
+                    onChanged: (value) {},
+                    label: 'Labeling',
+                    hint: '0.00',
+                    controller: _dummyController),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

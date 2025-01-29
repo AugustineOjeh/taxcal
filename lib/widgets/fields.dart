@@ -27,6 +27,10 @@ class TCField {
               style: Theme.of(context).textTheme.bodySmall,
               decoration: InputDecoration(
                   isDense: true,
+                  errorStyle: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(color: TCColor.red(context)),
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 14, horizontal: 12),
                   prefixIcon: currency == null
@@ -43,6 +47,10 @@ class TCField {
                       borderRadius: BorderRadius.circular(8),
                       borderSide:
                           BorderSide(color: TCColor.border(context), width: 1)),
+                  errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide:
+                          BorderSide(color: TCColor.red(context), width: 1)),
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
@@ -75,26 +83,35 @@ class TCField {
               style: Theme.of(context).textTheme.bodySmall,
               dropdownColor: TCColor.forground(context),
               isExpanded: false,
+              icon: Icon(Icons.expand_more_rounded),
+              iconEnabledColor: TCColor.border(context),
+              iconDisabledColor: TCColor.containerBg(context),
               decoration: InputDecoration(
-                  focusColor: TCColor.border(context),
-                  fillColor: TCColor.border(context),
-                  isDense: true,
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-                  hintText: hint,
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: TCColor.border(context)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide:
-                          BorderSide(color: TCColor.border(context), width: 1)),
-                  focusedBorder: OutlineInputBorder(
+                errorStyle: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: TCColor.red(context)),
+                isDense: true,
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+                hintText: hint,
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: TCColor.border(context)),
+                enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide:
-                        BorderSide(color: TCColor.textBody(context), width: 1),
-                  )))
+                        BorderSide(color: TCColor.border(context), width: 1)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide:
+                        BorderSide(color: TCColor.textBody(context), width: 1)),
+                errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide:
+                        BorderSide(color: TCColor.red(context), width: 1)),
+              ))
         ]);
   }
 }
