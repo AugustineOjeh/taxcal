@@ -55,6 +55,8 @@ class _HomeState extends ConsumerState<Home> {
                       SizedBox(height: 24),
                       TCButton.primary(context, 'Calculate Tax',
                           onPressed: () {}),
+                      SizedBox(height: 24),
+                      TCButton.secondary(context, 'Next', onPressed: () {}),
                     ],
                   )),
             ),

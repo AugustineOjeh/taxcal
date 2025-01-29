@@ -19,4 +19,18 @@ class TCButton {
               TCText.label(label, context, color: TCColor.foreground(context)),
         ));
   }
+
+  static secondary(BuildContext context, String label,
+      {required void Function() onPressed}) {
+    return ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+          padding: WidgetStatePropertyAll(EdgeInsets.symmetric(vertical: 16, horizontal: 16)),
+          elevation: WidgetStatePropertyAll(0),
+          backgroundColor: WidgetStatePropertyAll(TCColor.secondary(context)),
+          shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40))),
+        ),
+        child: TCText.label(label, context, color: TCColor.foreground(context)));
+  }
 }
