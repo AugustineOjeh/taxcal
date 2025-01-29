@@ -29,7 +29,7 @@ class TaxCal extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 color: Theme.of(context).colorScheme.onSurface),
             bodySmall: TextStyle(
-                fontSize: 12,
+                fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).colorScheme.onSurface)),
         colorScheme: ColorScheme(

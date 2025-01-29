@@ -15,10 +15,9 @@ class TCText {
     return Text(text,
         textAlign: TextAlign.left,
         softWrap: true,
-        style: Theme.of(context)
-            .textTheme
-            .bodyMedium!
-            .copyWith(color: Theme.of(context).colorScheme.secondary));
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: Theme.of(context).colorScheme.secondary,
+            fontWeight: FontWeight.w500));
   }
 
   static headingSmall(String text, BuildContext context) {

@@ -16,6 +16,9 @@ class TCColor {
   static Color forground(BuildContext context) {
     return Theme.of(context).colorScheme.onPrimary;
   }
+  static Color textBody(BuildContext context) {
+    return Theme.of(context).colorScheme.onSurface;
+  }
 
   static Color containerBg(BuildContext context) {
     return Theme.of(context).colorScheme.surface.withValues(alpha: 0.6);
