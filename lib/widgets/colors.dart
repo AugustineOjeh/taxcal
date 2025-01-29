@@ -13,7 +13,7 @@ class TCColor {
     return Theme.of(context).colorScheme.secondaryContainer;
   }
 
-  static Color forground(BuildContext context) {
+  static Color foreground(BuildContext context) {
     return Theme.of(context).colorScheme.onPrimary;
   }
 

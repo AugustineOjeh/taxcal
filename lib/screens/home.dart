@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taxcal/widgets/buttons.dart';
 import 'package:taxcal/widgets/containers.dart';
 import 'package:taxcal/widgets/fields.dart';
 
@@ -51,6 +52,9 @@ class _HomeState extends ConsumerState<Home> {
                       SizedBox(height: 24),
                       TCContainer.tax(context,
                           currency: 'NGN', amount: '30,000.00'),
+                      SizedBox(height: 24),
+                      TCButton.primary(context, 'Calculate Tax',
+                          onPressed: () {}),
                     ],
                   )),
             ),

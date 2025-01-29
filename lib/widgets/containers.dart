@@ -106,15 +106,15 @@ class TCContainer {
               spacing: 8,
               children: [
                 TCText.headingSmall(title, context,
-                    color: TCColor.forground(context)),
+                    color: TCColor.foreground(context)),
                 TCText.description(description, context,
-                    color: TCColor.forground(context)),
+                    color: TCColor.foreground(context)),
               ]),
           Expanded(child: SizedBox()),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-                color: TCColor.forground(context),
+                color: TCColor.foreground(context),
                 borderRadius: BorderRadius.circular(8)),
             child: TCText.label('$currency $amount', context),
           )
