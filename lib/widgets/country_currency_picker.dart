@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:taxcal/widgets/colors.dart';
+
+Widget getCountry(
+  BuildContext context, {
+  List<Map<String, String>> countryList = countries,
+  void Function()? onTap,
+  required int selectedCountry,
+}) {
+  return Row(
+    spacing: 4,
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Container(
+          width: 32,
+          height: 32,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              image: DecorationImage(
+                  image: AssetImage('lib/assets/images/nigeria_flag.png'),
+                  fit: BoxFit.fill))),
+      Icon(
+        Icons.expand_more_outlined,
+        color: TCColor.border(context),
+      )
+    ],
+  );
+}
+
+const List<Map<String, String>> countries = [
+  {
+    'name': 'Nigeria',
+    'flag': 'lib/assets/images/nigeria_flag.png',
+    'currency': '₦'
+  }
+];

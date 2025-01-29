@@ -27,6 +27,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/images/logo_light.png
+    - lib/assets/images/nigeria_flag.png
 
   fonts:
     - family: Inter

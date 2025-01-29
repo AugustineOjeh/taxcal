@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/widgets/buttons.dart';
 import 'package:taxcal/widgets/containers.dart';
+import 'package:taxcal/widgets/country_currency_picker.dart';
 import 'package:taxcal/widgets/fields.dart';
 
 class Home extends ConsumerStatefulWidget {
@@ -57,6 +58,8 @@ class _HomeState extends ConsumerState<Home> {
                           onPressed: () {}),
                       SizedBox(height: 24),
                       TCButton.secondary(context, 'Next', onPressed: () {}),
+                      SizedBox(height: 24),
+                      // getCountry(context),
                     ],
                   )),
             ),
