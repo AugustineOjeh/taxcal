@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 EdgeInsets dynamicPadding(BuildContext context) {
   double screenWidth = MediaQuery.of(context).size.width;
   if (screenWidth > 768) {
-    return EdgeInsets.fromLTRB(72, 48, 32, 48);
+    return EdgeInsets.fromLTRB(72, 40, 32, 40);
   } else if (screenWidth > 480) {
     return EdgeInsets.symmetric(horizontal: 32, vertical: 48);
   } else {
@@ -13,10 +13,5 @@ EdgeInsets dynamicPadding(BuildContext context) {
 
 double getMinContentHeight(BuildContext context) {
   double screenHeight = MediaQuery.of(context).size.height;
-  double screenWidth = MediaQuery.of(context).size.width;
-  if (screenWidth > 480) {
-    return screenHeight - 96;
-  } else {
-    return screenHeight - 96;
-  }
+  return screenHeight - 160;
 }

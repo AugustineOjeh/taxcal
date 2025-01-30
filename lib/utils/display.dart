@@ -10,7 +10,7 @@ class TCDisplay {
   static double displayFontSize(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth > 768) {
-      return 96;
+      return 128;
     } else if (screenWidth > 480 && screenWidth <= 768) {
       return 64;
     } else {

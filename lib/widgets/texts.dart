@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 class TCText {
   static title(String text, BuildContext context, {bool italic = false}) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Text(text,
-        textAlign: screenWidth > 767 ? TextAlign.right : TextAlign.left,
+        textAlign: TextAlign.left,
         softWrap: true,
+        overflow: TextOverflow.clip,
         style: Theme.of(context).textTheme.displayLarge!.copyWith(
             fontStyle: italic ? FontStyle.italic : null,
+            height: 0.8,
             fontWeight: FontWeight.normal));
   }
 

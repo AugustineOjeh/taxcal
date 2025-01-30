@@ -97,7 +97,6 @@ class _IncomeFormState extends ConsumerState<IncomeForm> {
                       label: 'Description',
                       hint: 'e.g. New employee referral bonus',
                       controller: _descriptionController),
-                  // SizedBox(height: 10),
                   Row(children: [
                     IconButton(
                       onPressed: () {},

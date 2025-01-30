@@ -9,8 +9,11 @@ class TCColor {
     return Theme.of(context).colorScheme.secondary;
   }
 
-  static Color border(BuildContext context) {
-    return Theme.of(context).colorScheme.secondaryContainer;
+  static Color border(BuildContext context, {double? opacity}) {
+    return Theme.of(context)
+        .colorScheme
+        .secondaryContainer
+        .withValues(alpha: opacity);
   }
 
   static Color foreground(BuildContext context) {

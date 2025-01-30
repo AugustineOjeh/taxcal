@@ -19,7 +19,7 @@ class _FormHolderState extends ConsumerState<FormHolder> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
             border: Border.all(width: 1, color: TCColor.border(context)),
             borderRadius: BorderRadius.circular(18)),
