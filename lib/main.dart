@@ -21,8 +21,8 @@ class TaxCal extends StatelessWidget {
         textTheme: TextTheme(
             displayLarge: TextStyle(
                 fontFamily: 'Gayathri',
-                fontWeight: FontWeight.w700,
-                fontSize: displayFontSize(context),
+                fontWeight: FontWeight.w500,
+                fontSize: TCDisplay.displayFontSize(context),
                 color: Colors.white),
             bodyMedium: TextStyle(
                 fontSize: 16,

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class TCText {
-  static title(String text, BuildContext context,
-      {bool bold = true, bool italic = false}) {
+  static title(String text, BuildContext context, {bool italic = false}) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Text(text,
-        textAlign: TextAlign.left,
+        textAlign: screenWidth > 767 ? TextAlign.right : TextAlign.left,
         softWrap: true,
         style: Theme.of(context).textTheme.displayLarge!.copyWith(
             fontStyle: italic ? FontStyle.italic : null,
-            fontWeight: bold ? FontWeight.w700 : FontWeight.normal));
+            fontWeight: FontWeight.normal));
   }
 
   static label(String text, BuildContext context, {Color? color}) {
@@ -31,11 +31,13 @@ class TCText {
             .copyWith(color: color, fontWeight: FontWeight.w600));
   }
 
-  static description(String text, BuildContext context, {Color? color}) {
+  static description(String text, BuildContext context,
+      {Color? color, bool? isBold}) {
     return Text(text,
         textAlign: TextAlign.left,
         softWrap: true,
-        style: Theme.of(context).textTheme.labelSmall!.copyWith(color: color));
+        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+            color: color, fontWeight: isBold == true ? FontWeight.bold : null));
   }
 
   static input(String text, BuildContext context) {

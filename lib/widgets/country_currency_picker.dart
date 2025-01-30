@@ -5,7 +5,7 @@ Widget getCountry(
   BuildContext context, {
   List<Map<String, String>> countryList = countries,
   void Function()? onTap,
-  required int selectedCountry,
+  required String selectedCountry,
 }) {
   return Row(
     spacing: 4,
@@ -13,8 +13,8 @@ Widget getCountry(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
-          width: 32,
-          height: 32,
+          width: 28,
+          height: 28,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               image: DecorationImage(
@@ -22,6 +22,7 @@ Widget getCountry(
                   fit: BoxFit.fill))),
       Icon(
         Icons.expand_more_outlined,
+        size: 20,
         color: TCColor.border(context),
       )
     ],

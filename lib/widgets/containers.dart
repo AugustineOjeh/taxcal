@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:taxcal/utils/display.dart';
-import 'package:taxcal/utils/image_urls.dart';
 import 'package:taxcal/widgets/colors.dart';
 import 'package:taxcal/widgets/texts.dart';
 
@@ -65,22 +64,21 @@ class TCContainer {
   }
 
   static Widget pageTitle(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-        padding: EdgeInsets.all(screenWidth > 767 ? 80 : 40),
-        width: double.infinity,
-        height: screenWidth > 767 ? 780 : 358,
+        padding: EdgeInsets.symmetric(horizontal: 32),
         decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(getImageUrl(DisplayImage().urls())),
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                Colors.black.withValues(alpha: 0.4),
-                BlendMode.darken,
-              ),
-            ),
+                image: NetworkImage(TCDisplay.getImageUrl(TCDisplay().urls())),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withValues(alpha: 0.5),
+                  BlendMode.darken,
+                )),
             borderRadius: BorderRadius.circular(36)),
-        child: TCText.title('Tax Calculator', context));
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [TCText.title('Tax Calculator', context)],
+        ));
   }
 
   static Widget tax(

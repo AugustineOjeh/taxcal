@@ -30,6 +30,6 @@ class TCColor {
   }
 
   static Color red(BuildContext context, {double? opacity}) {
-    return Color(0xFF34C759).withValues(alpha: opacity);
+    return Color(0xFFFF3B30).withValues(alpha: opacity);
   }
 }

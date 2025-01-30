@@ -61,7 +61,6 @@ class TCField {
     required BuildContext context,
     required String label,
     required String hint,
-    required TextEditingController controller,
     required ValueChanged<dynamic> onChanged,
     required List<String> items,
     FormFieldValidator? validator,
@@ -79,7 +78,10 @@ class TCField {
               }).toList(),
               validator: validator,
               onChanged: onChanged,
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(overflow: TextOverflow.ellipsis),
               dropdownColor: TCColor.foreground(context),
               isExpanded: false,
               icon: Icon(Icons.expand_more_rounded),
