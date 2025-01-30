@@ -19,8 +19,9 @@ class _ExpenseFormState extends ConsumerState<ExpenseForm> {
   final _amountController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  void addNewExpense() {
+  addNewExpense() {
     if (_formKey.currentState?.validate() ?? false) {
+      return _category;
       // ADD FUNCTION HERE
     }
   }

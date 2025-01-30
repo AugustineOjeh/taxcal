@@ -20,8 +20,9 @@ class _IncomeFormState extends ConsumerState<IncomeForm> {
   final _investedController = TextEditingController();
   final _descriptionController = TextEditingController();
 
-  void addNewIncome() {
+  addNewIncome() {
     if (_formKey.currentState?.validate() ?? false) {
+      return _category;
       // ADD FUNCTION HERE
     }
   }
