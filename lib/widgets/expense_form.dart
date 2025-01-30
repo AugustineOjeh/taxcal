@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/utils/categories.dart';
 import 'package:taxcal/widgets/buttons.dart';
+import 'package:taxcal/widgets/colors.dart';
 import 'package:taxcal/widgets/fields.dart';
 
 class ExpenseForm extends ConsumerStatefulWidget {
@@ -81,12 +82,15 @@ class _ExpenseFormState extends ConsumerState<ExpenseForm> {
                   label: 'Description',
                   hint: 'e.g. Loan interest payment',
                   controller: _descriptionController),
-              SizedBox(height: 10),
+              // SizedBox(height: 10),
               Row(
                 children: [
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.info_outline, weight: 200),
+                    icon: Icon(
+                      Icons.info_outline,
+                      color: TCColor.border(context),
+                    ),
                     iconSize: 32,
                   ),
                   Expanded(child: SizedBox()),

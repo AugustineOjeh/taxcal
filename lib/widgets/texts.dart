@@ -44,6 +44,7 @@ class TCText {
     return Text(text,
         textAlign: TextAlign.left,
         softWrap: true,
+        overflow: TextOverflow.ellipsis,
         style: Theme.of(context).textTheme.bodySmall);
   }
 

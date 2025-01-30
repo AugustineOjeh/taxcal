@@ -17,8 +17,8 @@ class TCColor {
     return Theme.of(context).colorScheme.onPrimary;
   }
 
-  static Color textBody(BuildContext context) {
-    return Theme.of(context).colorScheme.onSurface;
+  static Color textBody(BuildContext context, {double? opacity}) {
+    return Theme.of(context).colorScheme.onSurface.withValues(alpha: opacity);
   }
 
   static Color containerBg(BuildContext context) {

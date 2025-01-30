@@ -35,7 +35,7 @@ class TCField {
                   prefixIcon: currency == null
                       ? null
                       : Padding(
-                          padding: EdgeInsets.fromLTRB(12, 14, 4, 14),
+                          padding: EdgeInsets.fromLTRB(12, 10, 4, 10),
                           child: TCText.input(currency, context)),
                   hintText: hint,
                   hintStyle: Theme.of(context)
@@ -74,10 +74,13 @@ class TCField {
           DropdownButtonFormField(
               items: items.map((String item) {
                 return DropdownMenuItem<String>(
-                    value: item, child: TCText.input(item, context));
+                  value: item,
+                  child: SizedBox(child: TCText.input(item, context)),
+                );
               }).toList(),
               validator: validator,
               onChanged: onChanged,
+              menuMaxHeight: 400,
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!

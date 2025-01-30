@@ -3,22 +3,22 @@ class TCCategories {
     return [
       'Healthcare',
       'Insurance payment',
-      'Housing Fund contribution',
+      'NHF contribution',
       'Mortgage payment',
       'Food',
       'Household expenses',
       'Tuition',
       'Rental (business office)',
       'Rental (home office)',
-      'Rental (home or apartment)',
-      'Retirement Fund (Pension) contribution',
+      'Rental (home apartment)',
+      'Pension contribution',
       'Professional services',
       'Subscriptions (personal)',
       'Subscriptions (business)',
       'Charitable donations',
       'Tips & gifts',
       'Raw material purchase',
-      'Personal expenses (e.g clothing)',
+      'Personal purchase',
       'Others'
     ];
   }
