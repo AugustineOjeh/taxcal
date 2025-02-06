@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:taxcal/providers/expense_provider.dart';
+import 'package:taxcal/providers/income_provider.dart';
 import 'package:taxcal/widgets/buttons.dart';
 import 'package:taxcal/widgets/colors.dart';
 import 'package:taxcal/widgets/containers.dart';
@@ -19,8 +21,16 @@ class _CalculatorMobileState extends ConsumerState<CalculatorMobile> {
   bool _showTaxBreakdown = false;
   bool _showExpenseBreakdown = false;
   bool _showIncomeBreakdown = false;
+  num sumUpAmount(List<Map<String, dynamic>> entries) {
+    num totalAmount =
+        entries.fold(0, (sum, item) => sum + (item['amount'] as num));
+    return totalAmount;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final incomeEntries = ref.watch(incomeProvider);
+    final expenseEntries = ref.watch(expenseProvider);
     return ScrollConfiguration(
       behavior: ScrollBehavior().copyWith(scrollbars: false),
       child: SingleChildScrollView(
@@ -39,20 +49,32 @@ class _CalculatorMobileState extends ConsumerState<CalculatorMobile> {
           child: Column(spacing: 10, children: [
             TCContainer.income(context,
                 currency: widget.currency,
-                amount: '600,000',
-                isExpense: false, onTap: () {
-              setState(() {
-                _showIncomeBreakdown = !_showIncomeBreakdown;
-              });
-            }),
+                entries: incomeEntries,
+                removeEntry: (index) {
+                  ref.read(incomeProvider.notifier).removeEntry(index);
+                },
+                amount: sumUpAmount(incomeEntries).toString(),
+                isExpense: false,
+                showBreakdown: _showIncomeBreakdown,
+                onTap: () {
+                  setState(() {
+                    _showIncomeBreakdown = !_showIncomeBreakdown;
+                  });
+                }),
             TCContainer.income(context,
                 currency: widget.currency,
-                amount: '30,000',
-                isExpense: true, onTap: () {
-              setState(() {
-                _showExpenseBreakdown = !_showExpenseBreakdown;
-              });
-            }),
+                entries: expenseEntries,
+                amount: sumUpAmount(expenseEntries).toString(),
+                removeEntry: (index) {
+                  ref.read(expenseProvider.notifier).removeEntry(index);
+                },
+                isExpense: true,
+                showBreakdown: _showExpenseBreakdown,
+                onTap: () {
+                  setState(() {
+                    _showExpenseBreakdown = !_showExpenseBreakdown;
+                  });
+                }),
             TCContainer.tax(context,
                 amount: '53,450', currency: widget.currency, onTap: () {
               setState(() {

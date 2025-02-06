@@ -11,20 +11,19 @@ class TCContainer {
     String? description,
     required String currency,
     required bool isExpense,
-    bool showBreakdown = false,
+    required List<Map<String, dynamic>> entries,
+    required void Function(int index) removeEntry,
+    required bool showBreakdown,
     void Function()? onTap,
   }) {
-    return Column(
-      spacing: 4,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        GestureDetector(
-            onTap: onTap,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              decoration: BoxDecoration(
-                  color: TCColor.border(context, opacity: 0.2),
-                  borderRadius: BorderRadius.circular(12)),
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+            color: TCColor.border(context, opacity: 0.2),
+            borderRadius: BorderRadius.circular(12)),
+        child: Column(spacing: 4, mainAxisSize: MainAxisSize.min, children: [
+          GestureDetector(
+              onTap: onTap,
               child: Column(
                 spacing: 4,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,12 +60,45 @@ class TCContainer {
                             isExpenses: isExpense)
                       ]),
                 ],
-              ),
-            )),
-        // if (showBreakdown)
-        // ADD CONTAINER TO THE SHOW BREAKDOWN
-      ],
-    );
+              )),
+          if (showBreakdown)
+            ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: entries.length,
+                itemBuilder: (context, index) {
+                  final entry = entries[index];
+                  final String category = entry['category'];
+                  final String? description = entry['description'];
+                  final double amount = entry['amount'];
+
+                  return Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            iconSize: 16,
+                            onPressed: () {
+                              removeEntry(index);
+                            },
+                            icon: Icon(
+                              Icons.remove_circle_outline,
+                              color: TCColor.red(context),
+                            )),
+                        Expanded(
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                              TCText.input(category, context),
+                              if (description != null)
+                                TCText.description(description, context,
+                                    truncate: true)
+                            ])),
+                        TCText.label(amount.toString(), context)
+                      ]);
+                })
+        ]));
   }
 
   static Widget sum(
@@ -104,7 +136,9 @@ class TCContainer {
           mainAxisSize: MainAxisSize.max,
           children: [
             TCText.title('Tax Calculator', context),
-            SizedBox(height: 8,)
+            SizedBox(
+              height: 8,
+            )
           ],
         ));
   }

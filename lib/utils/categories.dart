@@ -10,7 +10,7 @@ class TCCategories {
       'Tuition',
       'Rental (business office)',
       'Rental (home office)',
-      'Rental (home apartment)',
+      'Rental (home/apartment)',
       'Pension contribution',
       'Professional services',
       'Subscriptions (personal)',

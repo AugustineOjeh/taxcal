@@ -33,9 +33,10 @@ class TCText {
   }
 
   static description(String text, BuildContext context,
-      {Color? color, bool? isBold}) {
+      {Color? color, bool? isBold, bool? truncate}) {
     return Text(text,
         textAlign: TextAlign.left,
+        overflow: truncate == true ? TextOverflow.ellipsis : null,
         softWrap: true,
         style: Theme.of(context).textTheme.labelSmall!.copyWith(
             color: color, fontWeight: isBold == true ? FontWeight.bold : null));
