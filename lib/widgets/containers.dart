@@ -24,42 +24,47 @@ class TCContainer {
         child: Column(spacing: 4, mainAxisSize: MainAxisSize.min, children: [
           GestureDetector(
               onTap: onTap,
-              child: Column(
-                spacing: 4,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TCText.headingSmall(
-                            title ?? (isExpense ? 'Expenses' : 'Income'),
-                            context),
-                        Expanded(child: SizedBox()),
-                        Icon(
-                          Icons.chevron_right_outlined,
-                          color: TCColor.border(context),
-                          size: 20,
-                        )
-                      ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TCText.input(
-                            description ??
-                                (isExpense
-                                    ? 'All your spending'
-                                    : 'Sum of money earned'),
-                            context),
-                        Expanded(child: SizedBox()),
-                        sum(context,
-                            amount: amount,
-                            currency: currency,
-                            isExpenses: isExpense)
-                      ]),
-                ],
+              child: Container(
+                color: Colors.transparent,
+                child: Column(
+                  spacing: 4,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TCText.headingSmall(
+                              title ?? (isExpense ? 'Expenses' : 'Income'),
+                              context),
+                          Expanded(child: SizedBox()),
+                          Icon(
+                            showBreakdown
+                                ? Icons.expand_more_outlined
+                                : Icons.chevron_right_outlined,
+                            color: TCColor.border(context),
+                            size: 20,
+                          )
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TCText.input(
+                              description ??
+                                  (isExpense
+                                      ? 'All your spending'
+                                      : 'Sum of money earned'),
+                              context),
+                          Expanded(child: SizedBox()),
+                          sum(context,
+                              amount: amount,
+                              currency: currency,
+                              isExpenses: isExpense)
+                        ]),
+                  ],
+                ),
               )),
           if (showBreakdown)
             ListView.builder(
@@ -147,52 +152,96 @@ class TCContainer {
     BuildContext context, {
     String title = 'Tax',
     String description = 'Amount payable',
-    bool showBreakdown = false,
-    required String amount,
+    required bool showBreakdown,
     required String currency,
+    required Map<String, dynamic> result,
     void Function()? onTap,
   }) {
-    return Column(
-      spacing: 4,
-      mainAxisSize: MainAxisSize.min,
-      children: [
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      decoration: BoxDecoration(
+          color: TCColor.secondary(context),
+          borderRadius: BorderRadius.circular(12)),
+      child: Column(spacing: 4, mainAxisSize: MainAxisSize.min, children: [
         GestureDetector(
-          onTap: onTap,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            decoration: BoxDecoration(
-                color: TCColor.secondary(context),
-                borderRadius: BorderRadius.circular(12)),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
+            onTap: onTap,
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 8,
+                        children: [
+                          TCText.headingSmall(title, context,
+                              color: TCColor.foreground(context)),
+                          TCText.description(description, context,
+                              color: TCColor.foreground(context)),
+                        ]),
+                    Expanded(child: SizedBox()),
+                    Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        decoration: BoxDecoration(
+                            color: TCColor.foreground(context),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: TCText.label(
+                            '$currency ${result['incomeTax'] + result['capitalGainsTax']}',
+                            context))
+                  ]),
+            )),
+        if (showBreakdown)
+          Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 8,
-                    children: [
-                      TCText.headingSmall(title, context,
-                          color: TCColor.foreground(context)),
-                      TCText.description(description, context,
-                          color: TCColor.foreground(context)),
-                    ]),
-                Expanded(child: SizedBox()),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: TCColor.foreground(context),
-                      borderRadius: BorderRadius.circular(8)),
-                  child: TCText.label('$currency $amount', context),
-                )
-              ],
-            ),
-          ),
-        ),
-        // if (showBreakdown)
-        // ADD CONTAINER TO THE SHOW BREAKDOWN
-      ],
+                SizedBox(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      Icon(Icons.circle,
+                          size: 8, color: TCColor.border(context)),
+                      Expanded(
+                          child: TCText.input('Relief allowance', context)),
+                      TCText.label(result['reliefAllowance'], context)
+                    ])),
+                SizedBox(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      Icon(Icons.circle,
+                          size: 8, color: TCColor.border(context)),
+                      Expanded(child: TCText.input('Deductions', context)),
+                      TCText.label(result['deductions'], context)
+                    ])),
+                SizedBox(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      Icon(Icons.circle,
+                          size: 8, color: TCColor.border(context)),
+                      Expanded(child: TCText.input('Capital Gains', context)),
+                      TCText.label(result['capitalGains'], context)
+                    ])),
+                SizedBox(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      Icon(Icons.circle,
+                          size: 8, color: TCColor.border(context)),
+                      Expanded(child: TCText.input('Taxable Income', context)),
+                      TCText.label(result['taxableIncome'], context)
+                    ]))
+              ])
+      ]),
     );
   }
 }

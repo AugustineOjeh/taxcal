@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/providers/expense_provider.dart';
 import 'package:taxcal/providers/income_provider.dart';
+import 'package:taxcal/providers/tax_provider.dart';
 import 'package:taxcal/widgets/buttons.dart';
 import 'package:taxcal/widgets/colors.dart';
 import 'package:taxcal/widgets/containers.dart';
@@ -31,6 +32,7 @@ class _CalculatorMobileState extends ConsumerState<CalculatorMobile> {
   Widget build(BuildContext context) {
     final incomeEntries = ref.watch(incomeProvider);
     final expenseEntries = ref.watch(expenseProvider);
+    final taxResult = ref.watch(taxProvider);
     return ScrollConfiguration(
       behavior: ScrollBehavior().copyWith(scrollbars: false),
       child: SingleChildScrollView(
@@ -75,12 +77,18 @@ class _CalculatorMobileState extends ConsumerState<CalculatorMobile> {
                     _showExpenseBreakdown = !_showExpenseBreakdown;
                   });
                 }),
-            TCContainer.tax(context,
-                amount: '53,450', currency: widget.currency, onTap: () {
-              setState(() {
-                _showTaxBreakdown = !_showTaxBreakdown;
-              });
-            }),
+            if (_calculationCompleted)
+              TCContainer.tax(
+                context,
+                currency: widget.currency,
+                showBreakdown: _showTaxBreakdown,
+                result: taxResult,
+                onTap: () {
+                  setState(() {
+                    _showTaxBreakdown = !_showTaxBreakdown;
+                  });
+                },
+              ),
             SizedBox(height: 24),
             FormHolder(currency: widget.currency),
             SizedBox(height: 16),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/providers/expense_provider.dart';
 import 'package:taxcal/providers/income_provider.dart';
+import 'package:taxcal/providers/tax_provider.dart';
 import 'package:taxcal/widgets/buttons.dart';
 import 'package:taxcal/widgets/colors.dart';
 import 'package:taxcal/widgets/containers.dart';
@@ -17,6 +18,7 @@ class CalculatorDesktop extends ConsumerStatefulWidget {
 }
 
 class _CalculatorDesktopState extends ConsumerState<CalculatorDesktop> {
+  bool _calculationCompleted = false;
   bool _showTaxBreakdown = false;
   bool _showExpenseBreakdown = false;
   bool _showIncomeBreakdown = false;
@@ -31,6 +33,7 @@ class _CalculatorDesktopState extends ConsumerState<CalculatorDesktop> {
     double screenHeight = MediaQuery.of(context).size.height;
     final incomeEntries = ref.watch(incomeProvider);
     final expenseEntries = ref.watch(expenseProvider);
+    final taxResult = ref.watch(taxProvider);
     return Row(
         spacing: 32,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -90,23 +93,37 @@ class _CalculatorDesktopState extends ConsumerState<CalculatorDesktop> {
                                       !_showExpenseBreakdown;
                                 });
                               }),
-                          TCContainer.tax(
-                            context,
-                            currency: widget.currency,
-                            amount: '53,450',
-                            onTap: () {
-                              setState(() {
-                                _showTaxBreakdown = !_showTaxBreakdown;
-                              });
-                            },
-                          ),
+                          if (_calculationCompleted)
+                            TCContainer.tax(
+                              context,
+                              currency: widget.currency,
+                              showBreakdown: _showTaxBreakdown,
+                              result: taxResult,
+                              onTap: () {
+                                setState(() {
+                                  _showTaxBreakdown = !_showTaxBreakdown;
+                                });
+                              },
+                            ),
                         ]),
-                        SizedBox(
-                          height: 8,
-                        ),
+                        SizedBox(height: 8),
                         FormHolder(currency: widget.currency),
-                        TCButton.primary(context, 'Calculate tax',
-                            onPressed: () {})
+                        TCButton.primary(
+                            context,
+                            _calculationCompleted
+                                ? 'Re-calculate tax'
+                                : 'Calculate tax', onPressed: () {
+                          if (expenseEntries.isEmpty || incomeEntries.isEmpty) {
+                            // SHOW SNACKBAR WITH MESSAGE TO ADD INCOMES AND EXPENSES
+                          } else {
+                            ref.read(taxProvider.notifier).calculateTax(
+                                incomeEntries: incomeEntries,
+                                expenseEntries: expenseEntries);
+                            setState(() {
+                              _calculationCompleted = true;
+                            });
+                          }
+                        })
                       ],
                     ),
                   ),
