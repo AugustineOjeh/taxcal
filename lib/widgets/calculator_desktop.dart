@@ -7,6 +7,7 @@ import 'package:taxcal/widgets/buttons.dart';
 import 'package:taxcal/widgets/colors.dart';
 import 'package:taxcal/widgets/containers.dart';
 import 'package:taxcal/widgets/form_holder.dart';
+import 'package:taxcal/widgets/snackbar.dart';
 
 class CalculatorDesktop extends ConsumerStatefulWidget {
   final String currency;
@@ -114,7 +115,9 @@ class _CalculatorDesktopState extends ConsumerState<CalculatorDesktop> {
                                 ? 'Re-calculate tax'
                                 : 'Calculate tax', onPressed: () {
                           if (expenseEntries.isEmpty || incomeEntries.isEmpty) {
-                            // SHOW SNACKBAR WITH MESSAGE TO ADD INCOMES AND EXPENSES
+                            TCSnackbar.primary(context,
+                                'Need expenses and incomes to calculate tax',
+                                isError: true);
                           } else {
                             ref.read(taxProvider.notifier).calculateTax(
                                 incomeEntries: incomeEntries,
