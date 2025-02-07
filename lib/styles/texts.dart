@@ -42,12 +42,14 @@ class TCText {
             color: color, fontWeight: isBold == true ? FontWeight.bold : null));
   }
 
-  static input(String text, BuildContext context) {
+  static input(String text, BuildContext context,
+      {bool overflow = true, bool isBold = false, Color? color}) {
     return Text(text,
         textAlign: TextAlign.left,
         softWrap: true,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.bodySmall);
+        overflow: overflow ? TextOverflow.ellipsis : null,
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+            fontWeight: isBold ? FontWeight.bold : null, color: color));
   }
 
   static placeholder(String text, BuildContext context) {

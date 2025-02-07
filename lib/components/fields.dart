@@ -63,6 +63,7 @@ class TCField {
     required String hint,
     required ValueChanged<dynamic> onChanged,
     required List<String> items,
+    required String? value,
     FormFieldValidator? validator,
     TextInputType? keyboardType,
   }) {
@@ -72,6 +73,7 @@ class TCField {
         children: [
           TCText.label(label, context),
           DropdownButtonFormField(
+              value: value,
               items: items.map((String item) {
                 return DropdownMenuItem<String>(
                   value: item,
@@ -81,13 +83,14 @@ class TCField {
               validator: validator,
               onChanged: onChanged,
               menuMaxHeight: 400,
+              hint: TCText.placeholder(hint, context),
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!
                   .copyWith(overflow: TextOverflow.ellipsis),
               dropdownColor: TCColor.foreground(context),
               isExpanded: false,
-              icon: Icon(Icons.expand_more_rounded),
+              icon: Icon(Icons.expand_more_rounded, size: 16),
               iconEnabledColor: TCColor.border(context),
               iconDisabledColor: TCColor.containerBg(context),
               decoration: InputDecoration(
@@ -97,12 +100,7 @@ class TCField {
                     .copyWith(color: TCColor.red(context)),
                 isDense: true,
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-                hintText: hint,
-                hintStyle: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: TCColor.border(context)),
+                    EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide:

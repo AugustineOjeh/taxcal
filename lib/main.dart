@@ -10,6 +10,8 @@ void main() {
 class TaxCal extends StatelessWidget {
   const TaxCal({super.key});
 
+  static const String version = '0.1.0';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,7 +55,7 @@ class TaxCal extends StatelessWidget {
             secondaryContainer: Color(0xFF9E9B95)),
         useMaterial3: true,
       ),
-      home: Home(),
+      home: Home(version: version),
     );
   }
 }

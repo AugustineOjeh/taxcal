@@ -66,43 +66,58 @@ class TCContainer {
                   ],
                 ),
               )),
-          if (showBreakdown)
-            ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: entries.length,
-                itemBuilder: (context, index) {
-                  final entry = entries[index];
-                  final String category = entry['category'];
-                  final String? description = entry['description'];
-                  final double amount = entry['amount'];
+          if (showBreakdown && entries.isNotEmpty)
+            Column(children: [
+              SizedBox(
+                height: 8,
+                child: Divider(
+                  indent: 16,
+                  endIndent: 16,
+                  thickness: 0.5,
+                  color: TCColor.border(context),
+                ),
+              ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.fromLTRB(16, 0, 0, 8),
+                  itemCount: entries.length,
+                  itemBuilder: (context, index) {
+                    final entry = entries[index];
+                    final String category = entry['category'];
+                    final String? description = entry['description'];
+                    final double amount = entry['amount'];
 
-                  return Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                            iconSize: 16,
-                            onPressed: () {
-                              removeEntry(index);
-                            },
-                            icon: Icon(
-                              Icons.remove_circle_outline,
-                              color: TCColor.red(context),
-                            )),
-                        Expanded(
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                              TCText.input(category, context),
-                              if (description != null)
-                                TCText.description(description, context,
-                                    truncate: true)
-                            ])),
-                        TCText.label(amount.toString(), context)
-                      ]);
-                })
+                    return Row(
+                        spacing: 8,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                TCText.input(category, context),
+                                if (description!.isNotEmpty)
+                                  TCText.description(description, context,
+                                      truncate: true)
+                              ])),
+                          TCText.input(
+                              '${isExpense ? '-' : '+'}$amount', context,
+                              isBold: true),
+                          IconButton(
+                              iconSize: 16,
+                              padding: EdgeInsets.all(0),
+                              visualDensity: VisualDensity.compact,
+                              onPressed: () {
+                                removeEntry(index);
+                              },
+                              icon: Icon(Icons.remove_circle_outline,
+                                  color: TCColor.red(context)))
+                        ]);
+                  })
+            ])
         ]));
   }
 
@@ -195,52 +210,71 @@ class TCContainer {
                   ]),
             )),
         if (showBreakdown)
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      Icon(Icons.circle,
-                          size: 8, color: TCColor.border(context)),
-                      Expanded(
-                          child: TCText.input('Relief allowance', context)),
-                      TCText.label(result['reliefAllowance'], context)
-                    ])),
-                SizedBox(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      Icon(Icons.circle,
-                          size: 8, color: TCColor.border(context)),
-                      Expanded(child: TCText.input('Deductions', context)),
-                      TCText.label(result['deductions'], context)
-                    ])),
-                SizedBox(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      Icon(Icons.circle,
-                          size: 8, color: TCColor.border(context)),
-                      Expanded(child: TCText.input('Capital Gains', context)),
-                      TCText.label(result['capitalGains'], context)
-                    ])),
-                SizedBox(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      Icon(Icons.circle,
-                          size: 8, color: TCColor.border(context)),
-                      Expanded(child: TCText.input('Taxable Income', context)),
-                      TCText.label(result['taxableIncome'], context)
-                    ]))
-              ])
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                      child: Row(
+                          spacing: 8,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                        Icon(Icons.circle,
+                            size: 8, color: TCColor.border(context)),
+                        Expanded(
+                            child: TCText.input('Relief allowance', context,
+                                color: TCColor.border(context))),
+                        TCText.input(
+                            result['reliefAllowance'].toString(), context,
+                            isBold: true, color: TCColor.border(context))
+                      ])),
+                  SizedBox(
+                      child: Row(
+                          spacing: 8,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                        Icon(Icons.circle,
+                            size: 8, color: TCColor.border(context)),
+                        Expanded(
+                            child: TCText.input('Deductions', context,
+                                color: TCColor.border(context))),
+                        TCText.input(result['deductions'].toString(), context,
+                            isBold: true, color: TCColor.border(context))
+                      ])),
+                  SizedBox(
+                      child: Row(
+                          spacing: 8,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                        Icon(Icons.circle,
+                            size: 8, color: TCColor.border(context)),
+                        Expanded(
+                            child: TCText.input('Capital Gains', context,
+                                color: TCColor.border(context))),
+                        TCText.input(result['capitalGains'].toString(), context,
+                            isBold: true, color: TCColor.border(context))
+                      ])),
+                  SizedBox(
+                      child: Row(
+                          spacing: 8,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                        Icon(Icons.circle,
+                            size: 8, color: TCColor.border(context)),
+                        Expanded(
+                            child: TCText.input('Taxable Income', context,
+                                color: TCColor.border(context))),
+                        TCText.input(result['taxableIncome'].toString(), context,
+                            isBold: true, color: TCColor.border(context))
+                      ]))
+                ]),
+          )
       ]),
     );
   }

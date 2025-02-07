@@ -1,26 +1,42 @@
 class NigeriaTaxLogics {
-  num sumDeductions(List<Map<String, dynamic>> expenseEntries) {
-    num totalDeductions = expenseEntries
+  bool isTaxable(String category) {
+    return !(category == 'ROI (Foreign Invesment)' ||
+        category == 'Dividends/Bond Yields' ||
+        category == 'Salary/Empoyment Bonus');
+  }
+
+  bool isDeductible(String category) {
+    return category == 'Healthcare' ||
+        category == 'Insurance payment' ||
+        category == 'Rental (business office)' ||
+        category == 'Subscriptions (business)' ||
+        category == 'Charitable donations' ||
+        category == 'Tips & gifts' ||
+        category == 'Raw material purchase';
+  }
+
+  double sumDeductions(List<Map<String, dynamic>> expenseEntries) {
+    double totalDeductions = expenseEntries
         .where((entry) => entry['isDeductible'] == true)
-        .fold(0, (sum, entry) => sum + (entry['amount'] as num));
+        .fold(0, (sum, entry) => sum + (entry['amount'] as double));
     return totalDeductions;
   }
 
-  num sumNonTaxableIncome(List<Map<String, dynamic>> incomeEntries) {
-    num nonTaxableIncome = incomeEntries
+  double sumNonTaxableIncome(List<Map<String, dynamic>> incomeEntries) {
+    double nonTaxableIncome = incomeEntries
         .where((entry) => entry['isTaxable'] == false)
-        .fold(0, (sum, entry) => sum + (entry['amount'] as num));
+        .fold(0, (sum, entry) => sum + (entry['amount'] as double));
     return nonTaxableIncome;
   }
 
-  num sumInvestmentReturns(List<Map<String, dynamic>> incomeEntries) {
-    num roi = incomeEntries
+  double sumInvestmentReturns(List<Map<String, dynamic>> incomeEntries) {
+    double roi = incomeEntries
         .where((entry) => entry['isCapitalGain'] == true)
-        .fold(0, (sum, entry) => sum + (entry['amount'] as num));
+        .fold(0, (sum, entry) => sum + (entry['amount'] as double));
     return roi;
   }
 
-  num sumCapitalGains(List<Map<String, dynamic>> incomeEntries) {
+  double sumCapitalGains(List<Map<String, dynamic>> incomeEntries) {
     final List<Map<String, dynamic>> returns =
         incomeEntries.where((entry) => entry['isCapitalGain'] == true).toList();
     double capitalGains = returns
@@ -30,16 +46,16 @@ class NigeriaTaxLogics {
     return capitalGains;
   }
 
-  num sumIncome(List<Map<String, dynamic>> incomeEntries) {
+  double sumIncome(List<Map<String, dynamic>> incomeEntries) {
     return incomeEntries.fold(
-        0, (sum, entry) => sum + (entry['amount'] as num));
+        0, (sum, entry) => sum + (entry['amount'] as double));
   }
 
-  num calculateCapitalGainsTax(num capitalGains) {
+  double calculateCapitalGainsTax(double capitalGains) {
     return capitalGains * 0.1;
   }
 
-  num getBaseAllowance(num grossIncome) {
+  double getBaseAllowance(double grossIncome) {
     if ((grossIncome * 0.01) > 200000) {
       return grossIncome * 0.01;
     } else {
@@ -47,9 +63,9 @@ class NigeriaTaxLogics {
     }
   }
 
-  num calculateReliefAllowance(
-      num grossIncome, List<Map<String, dynamic>> expenseEntries) {
-    num baseAllowance = getBaseAllowance(grossIncome);
+  double calculateReliefAllowance(
+      double grossIncome, List<Map<String, dynamic>> expenseEntries) {
+    double baseAllowance = getBaseAllowance(grossIncome);
 
     List<Map<String, dynamic>> contributions = expenseEntries
         .where((entry) =>
@@ -57,12 +73,13 @@ class NigeriaTaxLogics {
             entry['category'] == 'NHF contribution' ||
             entry['category'] == 'Mortgage payment')
         .toList();
-    num extraAllowance =
-        contributions.fold(0, (sum, item) => sum + (item['amount'] as num));
+    double deductibleContributions =
+        contributions.fold(0, (sum, item) => sum + (item['amount'] as double));
+    double extraAllowance = (grossIncome - deductibleContributions) * 0.2;
     return baseAllowance + extraAllowance;
   }
 
-  num calculateIncomeTax(num taxableIncome, num grossIncome) {
+  double calculateIncomeTax(double taxableIncome, double grossIncome) {
     if (grossIncome <= 840000) return 0;
     if (taxableIncome < (grossIncome * 0.01)) {
       return grossIncome * 0.01;

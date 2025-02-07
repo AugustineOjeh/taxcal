@@ -7,8 +7,10 @@ class TCSnackbar {
       {required bool isError}) {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: TCText.description(message, context,
-            color: TCColor.foreground(context)),
+        content: Center(
+          child: TCText.description(message, context,
+              color: TCColor.foreground(context)),
+        ),
         elevation: 1,
         duration: Duration(seconds: 3),
         backgroundColor:

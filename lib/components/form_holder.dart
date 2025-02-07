@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/components/buttons.dart';
 import 'package:taxcal/styles/colors.dart';
-import 'package:taxcal/widgets/expense_form.dart';
-import 'package:taxcal/widgets/income_form.dart';
+import 'package:taxcal/widgets/forms.dart';
 
-class FormHolder extends ConsumerStatefulWidget {
-  final String currency;
-  const FormHolder({required this.currency, super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _FormHolderState();
-}
-
-class _FormHolderState extends ConsumerState<FormHolder> {
-  int _currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
+class FormHolder {
+  Widget inputForm(
+    BuildContext context, {
+    required bool focusedOnExpense,
+    required void Function() switchFocus,
+    required void Function() onIncomeSubmit,
+    required void Function() onExpenseSubmit,
+    required TextEditingController investedAmountController,
+    required TextEditingController incomeAmountController,
+    required TextEditingController expenseAmountController,
+    required TextEditingController incomeDescriptionController,
+    required TextEditingController expenseDescriptionController,
+    required FormFieldValidator investedAmountValidation,
+    required FormFieldValidator incomeAmountValidation,
+    required FormFieldValidator expenseAmountValidation,
+    required FormFieldValidator incomeCategoryValidation,
+    required FormFieldValidator expenseCategoryValidation,
+    required String? incomeCategory,
+    required String? expenseCategory,
+    required ValueChanged onIncomeCategoryChange,
+    required ValueChanged onExpenseCategoryChange,
+    required String currency,
+    required Key incomeFormKey,
+    required Key expenseFormKey,
+  }) {
     return Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -32,25 +42,37 @@ class _FormHolderState extends ConsumerState<FormHolder> {
                   color: TCColor.textBody(context, opacity: 0.1)),
               child: Row(spacing: 4, children: [
                 Expanded(
-                    child: TCButton.toggle(context, 'Earnings', onPressed: () {
-                  if (_currentIndex != 0) {
-                    setState(() {
-                      _currentIndex = 0;
-                    });
-                  }
-                }, isSelected: _currentIndex == 0)),
+                    child: TCButton.toggle(context, 'Earnings',
+                        onPressed: focusedOnExpense ? switchFocus : () {},
+                        isSelected: !focusedOnExpense)),
                 Expanded(
-                    child: TCButton.toggle(context, 'Spendings', onPressed: () {
-                  if (_currentIndex != 1) {
-                    setState(() {
-                      _currentIndex = 1;
-                    });
-                  }
-                }, isSelected: _currentIndex == 1)),
+                    child: TCButton.toggle(context, 'Spendings',
+                        onPressed: focusedOnExpense ? () {} : switchFocus,
+                        isSelected: focusedOnExpense)),
               ])),
-          _currentIndex == 0
-              ? IncomeForm(currency: widget.currency)
-              : ExpenseForm(currency: widget.currency)
+          focusedOnExpense
+              ? TCForms().expense(context,
+                  amountController: expenseAmountController,
+                  descriptionController: expenseDescriptionController,
+                  category: expenseCategory,
+                  onDropdownChange: onExpenseCategoryChange,
+                  currency: currency,
+                  formKey: expenseFormKey,
+                  amountValidation: expenseAmountValidation,
+                  dropdownValidation: expenseCategoryValidation,
+                  onExpenseSubmit: onExpenseSubmit)
+              : TCForms().income(context,
+                  investAmountController: investedAmountController,
+                  amountController: incomeAmountController,
+                  descriptionController: incomeDescriptionController,
+                  category: incomeCategory,
+                  amountValidation: incomeAmountValidation,
+                  dropdownValidation: incomeCategoryValidation,
+                  investedAmountValidation: investedAmountValidation,
+                  onDropdownChange: onIncomeCategoryChange,
+                  currency: currency,
+                  formKey: incomeFormKey,
+                  onIncomeSubmit: onIncomeSubmit)
         ]));
   }
 }
