@@ -4,12 +4,11 @@ import 'package:taxcal/components/buttons.dart';
 import 'package:taxcal/components/form_holder.dart';
 import 'package:taxcal/components/snackbar.dart';
 import 'package:taxcal/logics/tax_logics_nigeria.dart';
+import 'package:taxcal/styles/texts.dart';
 import 'package:taxcal/utils/dimensions.dart';
 import 'package:taxcal/styles/colors.dart';
 import 'package:taxcal/widgets/appbar.dart';
 import 'package:taxcal/widgets/containers.dart';
-import 'package:taxcal/widgets/country_switch.dart';
-import 'package:taxcal/styles/texts.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({required this.version, super.key});
@@ -34,6 +33,7 @@ class _HomeState extends ConsumerState<Home> {
   bool _showTaxBreakdown = false;
   bool _calculationCompleted = false;
   bool _focusOnExpense = false;
+  bool _errorOccured = false;
   String? expenseCategory;
   String? incomeCategory;
   final expenseDescriptionController = TextEditingController();
@@ -91,7 +91,8 @@ class _HomeState extends ConsumerState<Home> {
         NigeriaTaxLogics().sumNonTaxableIncome(incomeEntries);
     final double investmentReturns =
         NigeriaTaxLogics().sumInvestmentReturns(incomeEntries);
-    final double capitalGains = NigeriaTaxLogics().sumCapitalGains(incomeEntries);
+    final double capitalGains =
+        NigeriaTaxLogics().sumCapitalGains(incomeEntries);
     final double taxableIncome = grossIncome -
         (nonTaxableIncome + investmentReturns + deductions + reliefAllowance);
     final capitalGainsTax =
@@ -336,10 +337,20 @@ class _HomeState extends ConsumerState<Home> {
                                                                                 incomeFormKey: _incomeFormKey,
                                                                                 expenseFormKey: _expenseFormKey,
                                                                               ),
-                                                                              TCButton.primary(context, _calculationCompleted ? 'Re-calculate tax' : 'Calculate tax', onPressed: () {
+                                                                              if (_errorOccured)
+                                                                                TCText.description('Please, provide income data', context, isBold: true, color: TCColor.red(context)),
+                                                                              TCButton.primary(context, _calculationCompleted ? 'Re-calculate tax' : 'Calculate tax', onPressed: () async {
+                                                                                setState(() {
+                                                                                  _calculationCompleted = false;
+                                                                                });
                                                                                 if (incomeEntries.isEmpty) {
-                                                                                  setState(() {});
-                                                                                  TCSnackbar.primary(context, 'No income to tax. Enter your income.', isError: true);
+                                                                                  setState(() {
+                                                                                    _errorOccured = true;
+                                                                                  });
+                                                                                  await Future.delayed(Duration(seconds: 5));
+                                                                                  setState(() {
+                                                                                    _errorOccured = false;
+                                                                                  });
                                                                                 } else {
                                                                                   calculateTax();
                                                                                   setState(() {

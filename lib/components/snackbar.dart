@@ -19,7 +19,7 @@ class TCSnackbar {
             borderRadius: BorderRadius.circular(4),
             side: BorderSide(width: 1, color: TCColor.foreground(context))),
         behavior: SnackBarBehavior.floating,
-        width: 300,
+        width: 250,
       ),
     );
   }

@@ -205,31 +205,38 @@ class TCContainer {
                             color: TCColor.foreground(context),
                             borderRadius: BorderRadius.circular(8)),
                         child: TCText.label(
-                            '$currency${result['incomeTax'] + result['capitalGainsTax']}',
+                            '$currency${(result['incomeTax'] + result['capitalGainsTax']).toStringAsFixed(2)}',
                             context))
                   ]),
             )),
         if (showBreakdown)
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 16),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  SizedBox(height: 4),
+                  SizedBox(
+                      height: 8,
+                      child: Divider(
+                        thickness: 0.5,
+                        color: TCColor.border(context),
+                      )),
                   SizedBox(
                       child: Row(
                           spacing: 8,
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                        Icon(Icons.circle,
-                            size: 8, color: TCColor.border(context)),
                         Expanded(
                             child: TCText.input('Relief allowance', context,
                                 color: TCColor.border(context))),
                         TCText.input(
-                            result['reliefAllowance'].toString(), context,
-                            isBold: true, color: TCColor.border(context))
+                            result['reliefAllowance'].toStringAsFixed(2),
+                            context,
+                            isBold: true,
+                            color: TCColor.border(context))
                       ])),
                   SizedBox(
                       child: Row(
@@ -237,12 +244,11 @@ class TCContainer {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                        Icon(Icons.circle,
-                            size: 8, color: TCColor.border(context)),
                         Expanded(
                             child: TCText.input('Deductions', context,
                                 color: TCColor.border(context))),
-                        TCText.input(result['deductions'].toString(), context,
+                        TCText.input(
+                            result['deductions'].toStringAsFixed(2), context,
                             isBold: true, color: TCColor.border(context))
                       ])),
                   SizedBox(
@@ -251,12 +257,11 @@ class TCContainer {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                        Icon(Icons.circle,
-                            size: 8, color: TCColor.border(context)),
                         Expanded(
                             child: TCText.input('Capital Gains', context,
                                 color: TCColor.border(context))),
-                        TCText.input(result['capitalGains'].toString(), context,
+                        TCText.input(
+                            result['capitalGains'].toStringAsFixed(2), context,
                             isBold: true, color: TCColor.border(context))
                       ])),
                   SizedBox(
@@ -265,12 +270,11 @@ class TCContainer {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                        Icon(Icons.circle,
-                            size: 8, color: TCColor.border(context)),
                         Expanded(
                             child: TCText.input('Taxable Income', context,
                                 color: TCColor.border(context))),
-                        TCText.input(result['taxableIncome'].toString(), context,
+                        TCText.input(
+                            result['taxableIncome'].toStringAsFixed(2), context,
                             isBold: true, color: TCColor.border(context))
                       ]))
                 ]),
