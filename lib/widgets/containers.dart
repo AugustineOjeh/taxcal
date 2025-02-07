@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taxcal/utils/display.dart';
 import 'package:taxcal/styles/colors.dart';
 import 'package:taxcal/styles/texts.dart';
+import 'package:taxcal/utils/utilities.dart';
 
 class TCContainer {
   static Widget income(
@@ -71,8 +72,7 @@ class TCContainer {
               SizedBox(
                 height: 8,
                 child: Divider(
-                  indent: 16,
-                  endIndent: 16,
+                  indent: 12,
                   thickness: 0.5,
                   color: TCColor.border(context),
                 ),
@@ -80,42 +80,47 @@ class TCContainer {
               ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.fromLTRB(16, 0, 0, 8),
+                  padding: EdgeInsets.fromLTRB(12, 0, 0, 8),
                   itemCount: entries.length,
                   itemBuilder: (context, index) {
                     final entry = entries[index];
                     final String category = entry['category'];
                     final String? description = entry['description'];
-                    final double amount = entry['amount'];
+                    final String amount =
+                        TCUtils().formatAmount(entry['amount']);
 
-                    return Row(
-                        spacing: 8,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                              child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                TCText.input(category, context),
-                                if (description!.isNotEmpty)
-                                  TCText.description(description, context,
-                                      truncate: true)
-                              ])),
-                          TCText.input(
-                              '${isExpense ? '-' : '+'}$amount', context,
-                              isBold: true),
-                          IconButton(
-                              iconSize: 16,
-                              padding: EdgeInsets.all(0),
-                              visualDensity: VisualDensity.compact,
-                              onPressed: () {
-                                removeEntry(index);
-                              },
-                              icon: Icon(Icons.remove_circle_outline,
-                                  color: TCColor.red(context)))
-                        ]);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                          spacing: 8,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                  TCText.input(category, context, isBold: true),
+                                  if (description!.isNotEmpty)
+                                    TCText.description(description, context,
+                                        truncate: true)
+                                ])),
+                            TCText.input(
+                                '${isExpense ? '-' : '+'}$amount', context,
+                                isBold: true),
+                            IconButton(
+                                iconSize: 16,
+                                padding: EdgeInsets.all(0),
+                                visualDensity: VisualDensity.compact,
+                                onPressed: () {
+                                  removeEntry(index);
+                                },
+                                icon: Icon(Icons.remove_circle_outline,
+                                    color: TCColor.red(context)))
+                          ]),
+                    );
                   })
             ])
         ]));
@@ -205,13 +210,13 @@ class TCContainer {
                             color: TCColor.foreground(context),
                             borderRadius: BorderRadius.circular(8)),
                         child: TCText.label(
-                            '$currency${(result['incomeTax'] + result['capitalGainsTax']).toStringAsFixed(2)}',
+                            '$currency${TCUtils().formatAmount(double.parse((result['incomeTax'] + result['capitalGainsTax']).toStringAsFixed(2)))}',
                             context))
                   ]),
             )),
         if (showBreakdown)
           Padding(
-            padding: const EdgeInsets.only(left: 16),
+            padding: const EdgeInsets.only(left: 12),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -223,6 +228,7 @@ class TCContainer {
                         thickness: 0.5,
                         color: TCColor.border(context),
                       )),
+                  SizedBox(height: 4),
                   SizedBox(
                       child: Row(
                           spacing: 8,
@@ -233,7 +239,8 @@ class TCContainer {
                             child: TCText.input('Relief allowance', context,
                                 color: TCColor.border(context))),
                         TCText.input(
-                            result['reliefAllowance'].toStringAsFixed(2),
+                            TCUtils().formatAmount(double.parse(
+                                result['reliefAllowance'].toStringAsFixed(2))),
                             context,
                             isBold: true,
                             color: TCColor.border(context))
@@ -248,8 +255,11 @@ class TCContainer {
                             child: TCText.input('Deductions', context,
                                 color: TCColor.border(context))),
                         TCText.input(
-                            result['deductions'].toStringAsFixed(2), context,
-                            isBold: true, color: TCColor.border(context))
+                            TCUtils().formatAmount(double.parse(
+                                result['deductions'].toStringAsFixed(2))),
+                            context,
+                            isBold: true,
+                            color: TCColor.border(context))
                       ])),
                   SizedBox(
                       child: Row(
@@ -261,8 +271,11 @@ class TCContainer {
                             child: TCText.input('Capital Gains', context,
                                 color: TCColor.border(context))),
                         TCText.input(
-                            result['capitalGains'].toStringAsFixed(2), context,
-                            isBold: true, color: TCColor.border(context))
+                            TCUtils().formatAmount(double.parse(
+                                result['capitalGains'].toStringAsFixed(2))),
+                            context,
+                            isBold: true,
+                            color: TCColor.border(context))
                       ])),
                   SizedBox(
                       child: Row(
@@ -274,8 +287,11 @@ class TCContainer {
                             child: TCText.input('Taxable Income', context,
                                 color: TCColor.border(context))),
                         TCText.input(
-                            result['taxableIncome'].toStringAsFixed(2), context,
-                            isBold: true, color: TCColor.border(context))
+                            TCUtils().formatAmount(double.parse(
+                                result['taxableIncome'].toStringAsFixed(2))),
+                            context,
+                            isBold: true,
+                            color: TCColor.border(context))
                       ]))
                 ]),
           )

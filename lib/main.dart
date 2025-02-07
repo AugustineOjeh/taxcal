@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/screens/home.dart';
 import 'package:taxcal/utils/display.dart';
 
 void main() {
-  runApp(ProviderScope(child: TaxCal()));
+  runApp(TaxCal());
 }
 
 class TaxCal extends StatelessWidget {
   const TaxCal({super.key});
 
   static const String version = '0.1.0';
+  static const String sdkVersion = '3.6.0';
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class TaxCal extends StatelessWidget {
             secondaryContainer: Color(0xFF9E9B95)),
         useMaterial3: true,
       ),
-      home: Home(version: version),
+      home: Home(version: version, sdkVersion: sdkVersion),
     );
   }
 }

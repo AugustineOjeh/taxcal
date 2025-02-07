@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/components/buttons.dart';
 import 'package:taxcal/components/form_holder.dart';
-import 'package:taxcal/components/snackbar.dart';
 import 'package:taxcal/logics/tax_logics_nigeria.dart';
 import 'package:taxcal/styles/texts.dart';
 import 'package:taxcal/utils/dimensions.dart';
 import 'package:taxcal/styles/colors.dart';
+import 'package:taxcal/utils/utilities.dart';
 import 'package:taxcal/widgets/appbar.dart';
 import 'package:taxcal/widgets/containers.dart';
 
-class Home extends ConsumerStatefulWidget {
-  const Home({required this.version, super.key});
+class Home extends StatefulWidget {
+  const Home({required this.version, required this.sdkVersion, super.key});
   final String version;
+  final String sdkVersion;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HomeState();
+  State<StatefulWidget> createState() => _HomeState();
 }
 
-class _HomeState extends ConsumerState<Home> {
+class _HomeState extends State<Home> {
   String country = 'Nigeria';
   String currency = '₦';
   List<Map<String, dynamic>> expenseEntries = [];
@@ -167,7 +167,7 @@ class _HomeState extends ConsumerState<Home> {
                                               context: context,
                                               version: widget.version,
                                               selectedCountry: country),
-                                          SizedBox(height: 64),
+                                          SizedBox(height: 56),
                                           SizedBox(
                                               width: double.infinity,
                                               child: Column(
@@ -198,7 +198,7 @@ class _HomeState extends ConsumerState<Home> {
                                                                     constraints: BoxConstraints(
                                                                         maxHeight:
                                                                             screenHeight -
-                                                                                184,
+                                                                                200,
                                                                         maxWidth:
                                                                             450,
                                                                         minWidth:
@@ -214,7 +214,7 @@ class _HomeState extends ConsumerState<Home> {
                                                                               Column(spacing: 10, children: [
                                                                                 TCContainer.income(
                                                                                   context,
-                                                                                  amount: _totalIncome.toString(),
+                                                                                  amount: TCUtils().formatAmount(_totalIncome),
                                                                                   entries: incomeEntries,
                                                                                   currency: currency,
                                                                                   isExpense: false,
@@ -233,7 +233,7 @@ class _HomeState extends ConsumerState<Home> {
                                                                                 ),
                                                                                 TCContainer.income(
                                                                                   context,
-                                                                                  amount: _totalExpenses.toString(),
+                                                                                  amount: TCUtils().formatAmount(_totalExpenses),
                                                                                   entries: expenseEntries,
                                                                                   currency: currency,
                                                                                   isExpense: true,
@@ -368,12 +368,31 @@ class _HomeState extends ConsumerState<Home> {
                                                                     .infinity,
                                                                 height:
                                                                     screenHeight -
-                                                                        184,
+                                                                        200,
                                                                 child: TCContainer
                                                                     .pageTitle(
                                                                         context)),
                                                           )
                                                       ]),
+                                                  Center(
+                                                      child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      TCText.input(
+                                                          '© 2025 Augustine Ojeh –written in ',
+                                                          context,
+                                                          // isBold: true,
+                                                          color: TCColor.border(
+                                                              context)),
+                                                      TCText.input(
+                                                          'Dart ${widget.sdkVersion}',
+                                                          context,
+                                                          isBold: true,
+                                                          color: TCColor.border(
+                                                              context)),
+                                                    ],
+                                                  ))
                                                 ],
                                               )),
                                         ]))),
