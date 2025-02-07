@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:taxcal/utils/display.dart';
-import 'package:taxcal/widgets/colors.dart';
-import 'package:taxcal/widgets/texts.dart';
+import 'package:taxcal/styles/colors.dart';
+import 'package:taxcal/styles/texts.dart';
 
 class TCContainer {
   static Widget income(
@@ -190,7 +190,7 @@ class TCContainer {
                             color: TCColor.foreground(context),
                             borderRadius: BorderRadius.circular(8)),
                         child: TCText.label(
-                            '$currency ${result['incomeTax'] + result['capitalGainsTax']}',
+                            '$currency${result['incomeTax'] + result['capitalGainsTax']}',
                             context))
                   ]),
             )),

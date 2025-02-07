@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/utils/dimensions.dart';
 import 'package:taxcal/widgets/calculator_desktop.dart';
 import 'package:taxcal/widgets/calculator_mobile.dart';
-import 'package:taxcal/widgets/colors.dart';
+import 'package:taxcal/styles/colors.dart';
 import 'package:taxcal/widgets/country_currency_picker.dart';
-import 'package:taxcal/widgets/texts.dart';
+import 'package:taxcal/styles/texts.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:taxcal/widgets/colors.dart';
+import 'package:taxcal/styles/colors.dart';
 
 Widget getCountry(
   BuildContext context, {

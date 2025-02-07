@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:taxcal/widgets/colors.dart';
-import 'package:taxcal/widgets/texts.dart';
+import 'package:taxcal/styles/colors.dart';
+import 'package:taxcal/styles/texts.dart';
 
 class TCField {
   static text({

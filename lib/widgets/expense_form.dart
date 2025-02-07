@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taxcal/utils/categories.dart';
-import 'package:taxcal/widgets/buttons.dart';
-import 'package:taxcal/widgets/colors.dart';
-import 'package:taxcal/widgets/fields.dart';
+import 'package:taxcal/components/buttons.dart';
+import 'package:taxcal/styles/colors.dart';
+import 'package:taxcal/components/fields.dart';
 
 class ExpenseForm extends ConsumerStatefulWidget {
   final String currency;
